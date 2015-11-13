@@ -109,7 +109,7 @@
         <!--Play-->
         <scene sceneID="ZBX-am-XPz">
             <objects>
-                <viewController storyboardIdentifier="PlayController" id="vBt-eh-rF3" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayController" id="vBt-eh-rF3" customClass="PlaySoundsViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZsP-OX-Fzc"/>
                         <viewControllerLayoutGuide type="bottom" id="nu0-VO-Vhy"/>
@@ -117,7 +117,54 @@
                     <view key="view" contentMode="scaleToFill" id="bdm-hb-Ov9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGT-iT-VH7">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="slow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="65" y="140" width="100" height="100"/>
+                                </variation>
+                                <connections>
+                                    <action selector="playSlow:" destination="vBt-eh-rF3" eventType="touchUpInside" id="d4S-wK-y9h"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="JGT-iT-VH7" secondAttribute="centerX" id="Jkc-hv-vOj"/>
+                            <constraint firstItem="JGT-iT-VH7" firstAttribute="leading" secondItem="bdm-hb-Ov9" secondAttribute="leadingMargin" constant="50" id="WCh-ho-K3y"/>
+                            <constraint firstAttribute="centerX" secondItem="JGT-iT-VH7" secondAttribute="centerX" constant="85" id="dYT-vX-Hqw">
+                                <variation key="widthClass=compact" constant="75"/>
+                            </constraint>
+                            <constraint firstItem="JGT-iT-VH7" firstAttribute="top" secondItem="ZsP-OX-Fzc" secondAttribute="bottom" constant="50" id="keK-E2-x9A"/>
+                            <constraint firstItem="JGT-iT-VH7" firstAttribute="top" secondItem="ZsP-OX-Fzc" secondAttribute="bottom" constant="76" id="qbU-5I-gk7"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="JGT-iT-VH7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Jkc-hv-vOj"/>
+                                <exclude reference="WCh-ho-K3y"/>
+                                <exclude reference="dYT-vX-Hqw"/>
+                                <exclude reference="keK-E2-x9A"/>
+                                <exclude reference="qbU-5I-gk7"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="JGT-iT-VH7"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Jkc-hv-vOj"/>
+                                <include reference="WCh-ho-K3y"/>
+                                <exclude reference="dYT-vX-Hqw"/>
+                                <include reference="keK-E2-x9A"/>
+                                <exclude reference="qbU-5I-gk7"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Play" id="DmE-of-VBs"/>
                 </viewController>
@@ -146,6 +193,7 @@
     </scenes>
     <resources>
         <image name="microphone" width="100" height="100"/>
+        <image name="slow" width="100" height="100"/>
         <image name="stop" width="50" height="50"/>
     </resources>
 </document>
