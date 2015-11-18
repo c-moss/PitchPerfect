@@ -9,19 +9,33 @@
 import UIKit
 import AVFoundation
 
-class PlaySoundsViewController: UIViewController {
+class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
+    
+    @IBOutlet weak var stopButton: UIButton!
     
     var audioPlayer:AVAudioPlayer!
+    //TODO: remove once Swift 2.0 is here
     var playError:NSError?
+    
+    var receivedAudio:RecordedAudio!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if var filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
-            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: filePath), error: &playError)
-        } else {
-            println("File not found")
-        }
+//        if var filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
+//
+//        } else {
+//            println("File not found")
+//        }
+        
+        //TODO: change to Swift 2.0 error handling syntax
+        audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: &playError)
+        audioPlayer.enableRate = true
+        audioPlayer.delegate = self
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        stopButton.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,10 +44,38 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func playSlow(sender: UIButton) {
-        audioPlayer.play()
-        println(playError?.description)
+        play(0.5)
     }
 
+    @IBAction func playFast(sender: UIButton) {
+        play(2.0)
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        stopButton.hidden = true
+    }
+    
+    func play(rate: Float) {
+        stopButton.hidden = false
+        
+        //clean up after any previous playback
+        playError = nil
+        audioPlayer.stop()
+        audioPlayer.currentTime = 0
+        
+        audioPlayer.rate = rate
+        audioPlayer.play()
+        if (playError != nil) {
+            println(playError?.description)
+        }
+    }
+    
+    @IBAction func stopPlayback(sender: UIButton) {
+        audioPlayer.stop()
+        audioPlayer.currentTime = 0
+        stopButton.hidden = true
+    }
+    
     /*
     // MARK: - Navigation
 
