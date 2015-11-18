@@ -14,8 +14,6 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var stopButton: UIButton!
     
     var audioPlayer:AVAudioPlayer!
-    //TODO: remove once Swift 2.0 is here
-    var playError:NSError?
     
     var receivedAudio:RecordedAudio!
 
@@ -27,9 +25,8 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
 //        } else {
 //            println("File not found")
 //        }
-        
-        //TODO: change to Swift 2.0 error handling syntax
-        audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl, error: &playError)
+    
+        audioPlayer = try! AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl)
         audioPlayer.enableRate = true
         audioPlayer.delegate = self
     }
@@ -51,7 +48,7 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         play(2.0)
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         stopButton.hidden = true
     }
     
@@ -59,15 +56,11 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         stopButton.hidden = false
         
         //clean up after any previous playback
-        playError = nil
         audioPlayer.stop()
         audioPlayer.currentTime = 0
         
         audioPlayer.rate = rate
         audioPlayer.play()
-        if (playError != nil) {
-            println(playError?.description)
-        }
     }
     
     @IBAction func stopPlayback(sender: UIButton) {
