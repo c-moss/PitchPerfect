@@ -9,26 +9,28 @@
 import UIKit
 import AVFoundation
 
-class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
+class PlaySoundsViewController: UIViewController {
     
     @IBOutlet weak var stopButton: UIButton!
     
-    var audioPlayer:AVAudioPlayer!
-    
     var receivedAudio:RecordedAudio!
+    
+    var audioFile:AVAudioFile!
+    
+    var audioEngine:AVAudioEngine!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if var filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
-//
+//        if let filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
+//            try! audioFile = AVAudioFile(forReading: NSURL(fileURLWithPath: filePath))
 //        } else {
-//            println("File not found")
+//            print("File not found")
 //        }
-    
-        audioPlayer = try! AVAudioPlayer(contentsOfURL: receivedAudio.filePathUrl)
-        audioPlayer.enableRate = true
-        audioPlayer.delegate = self
+        
+        try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
+        
+        audioEngine = AVAudioEngine()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,31 +43,60 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     }
     
     @IBAction func playSlow(sender: UIButton) {
-        play(0.5)
+        play(rate: 0.5)
     }
 
     @IBAction func playFast(sender: UIButton) {
-        play(2.0)
+        play(rate: 2.0)
     }
     
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
-        stopButton.hidden = true
+    @IBAction func playChipmunkAudio(sender: UIButton) {
+        play(pitch:1000)
     }
     
-    func play(rate: Float) {
+    @IBAction func playDarthAudio(sender: UIButton) {
+        play(pitch:-1000)
+    }
+    
+    func play(rate rate: Float?=nil, pitch: Float?=nil) {
         stopButton.hidden = false
         
         //clean up after any previous playback
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
+        audioEngine.stop()
+        audioEngine.reset()
         
-        audioPlayer.rate = rate
-        audioPlayer.play()
+        //set up player node
+        let playerNode = AVAudioPlayerNode()
+        audioEngine.attachNode(playerNode)
+        
+        //set up pitch/rate node and insert parameters
+        let pitchRateNode = AVAudioUnitTimePitch()
+        if let uRate = rate {
+            pitchRateNode.rate = uRate
+        }
+        if let uPitch = pitch {
+            pitchRateNode.pitch = uPitch
+        }
+        audioEngine.attachNode(pitchRateNode)
+        
+        //connect nodes
+        audioEngine.connect(playerNode, to: pitchRateNode, format: audioFile.processingFormat)
+        audioEngine.connect(pitchRateNode, to: audioEngine.outputNode, format: audioFile.processingFormat)
+        
+        //schedule file for playback in player node
+        playerNode.scheduleFile(audioFile, atTime: nil, completionHandler: {
+            //TODO: completionHandler doesn't get called exactly at the end of playback - figure out why
+            self.stopButton.hidden = true
+        })
+        
+        try! audioEngine.start()
+        
+        playerNode.play()
     }
     
     @IBAction func stopPlayback(sender: UIButton) {
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
+        audioEngine.stop()
+        audioEngine.reset()
         stopButton.hidden = true
     }
     
