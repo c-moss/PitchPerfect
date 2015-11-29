@@ -40,7 +40,11 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
     }
 
     /**
-     IBAction that handles the record button being pressed. Starts recording audio to a .wav file.
+     IBAction that handles the record button being pressed. 
+     
+     If there is no current recorder, starts a new recording.
+     If a recorder exists, assume that it's paused and resume.
+     
      - parameter sender:UIButton that triggered the action
     */
     @IBAction func startRecordAudio(sender: UIButton) {
@@ -75,6 +79,10 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
         }
     }
     
+    /**
+     IBAction that handles the pause button being pressed. Pauses the recording.
+     - parameter sender:UIButton that triggered the action
+     */
     @IBAction func pauseRecordAudio(sender: UIButton) {
         guard audioRecorder != nil else {
             return
