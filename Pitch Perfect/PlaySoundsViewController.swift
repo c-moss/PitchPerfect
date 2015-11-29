@@ -9,6 +9,9 @@
 import UIKit
 import AVFoundation
 
+/**
+ ViewController for the Play screen. Has actions for playing back the recorded audio with various effects applied.
+ */
 class PlaySoundsViewController: UIViewController {
     
     @IBOutlet weak var stopButton: UIButton!
@@ -22,13 +25,15 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        if let filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
-//            try! audioFile = AVAudioFile(forReading: NSURL(fileURLWithPath: filePath))
-//        } else {
-//            print("File not found")
-//        }
         
-        try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
+        //TODO: Delete this test code and the mp3 resource it uses
+        if let filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
+            try! audioFile = AVAudioFile(forReading: NSURL(fileURLWithPath: filePath))
+        } else {
+            print("File not found")
+        }
+        
+        //try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
         
         audioEngine = AVAudioEngine()
     }
@@ -58,18 +63,24 @@ class PlaySoundsViewController: UIViewController {
         play(pitch:-1000)
     }
     
+    /**
+     Play the recorded audio.
+     
+     - parameter rate: Rate to play back the audio at
+     - parameter pitch: Pitch to play back the audio at
+     */
     func play(rate rate: Float?=nil, pitch: Float?=nil) {
         stopButton.hidden = false
         
-        //clean up after any previous playback
+        //clean up audio engine after any previous playback
         audioEngine.stop()
         audioEngine.reset()
         
-        //set up player node
+        //set up player audio engine node
         let playerNode = AVAudioPlayerNode()
         audioEngine.attachNode(playerNode)
         
-        //set up pitch/rate node and insert parameters
+        //set up pitch/rate audio engine node and insert parameters
         let pitchRateNode = AVAudioUnitTimePitch()
         if let uRate = rate {
             pitchRateNode.rate = uRate
@@ -99,15 +110,5 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.reset()
         stopButton.hidden = true
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

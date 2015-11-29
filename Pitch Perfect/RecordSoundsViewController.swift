@@ -9,6 +9,9 @@
 import UIKit
 import AVFoundation
 
+/**
+ ViewController for the Record screen screen. Lets the user record an audio clip, then transitions to the Play screen.
+ */
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     
     @IBOutlet weak var recordingLabel: UILabel!
@@ -20,34 +23,39 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func viewWillAppear(animated: Bool) {
+        //set up the UI
         recordButton.enabled = true
         stopButton.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
+    /**
+     IBAction that handles the record button being pressed. Starts recording audio to a .wav file.
+     - parameter sender:UIButton that triggered the action
+    */
     @IBAction func startRecordAudio(sender: UIButton) {
-        //update UI
+        //update the UI
         recordingLabel.hidden = false
         recordButton.enabled = false
         stopButton.hidden = false
         
+        //set up the location and file for the recording
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        
         let recordingName = "recording.wav"
         let pathArray = [dirPath, recordingName]
         let filePath = NSURL.fileURLWithPathComponents(pathArray)
-        print(filePath)
         
+        //set up the audio session
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        
+        //set up the audio recorder and start recording
         try! audioRecorder = AVAudioRecorder(URL: filePath!, settings: [:])
         audioRecorder.delegate = self
         audioRecorder.meteringEnabled = true
@@ -55,17 +63,20 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.record()
     }
     
+    /**
+     IBAction that handles the stop button being pressed. Stops an in-progress recording.
+     - parameter sender:UIButton that triggered the action
+     */
     @IBAction func stopRecordAudio(sender: UIButton) {
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setActive(false)
-        } catch let error as NSError {
-            //TODO: handle errors in a user-friendly way
-            print("Error occurred stopping recording: " + error.description)
-        }
+        try! audioSession.setActive(false)
     }
     
+    /*
+     AVAudioRecorderDelegate calls this when the audio recorder finishes recording.
+     If the recording was successful, populate the RecorderAudio model and perform the segue.
+     */
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully success: Bool) {
         if (success) {
             let recordedAudio:RecordedAudio = RecordedAudio()
@@ -81,6 +92,9 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
+    /*
+     Pass the model object to the destination view controller
+     */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "stopRecording") {
             let playSoundsVC = segue.destinationViewController as! PlaySoundsViewController
