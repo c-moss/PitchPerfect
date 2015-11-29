@@ -29,6 +29,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         //set up the UI
         recordButton.enabled = true
         stopButton.hidden = true
+        recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,7 +42,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     */
     @IBAction func startRecordAudio(sender: UIButton) {
         //update the UI
-        recordingLabel.hidden = false
+        recordingLabel.text = NSLocalizedString("RecordingLabel_recording", comment: "")
         recordButton.enabled = false
         stopButton.hidden = false
         
@@ -85,7 +86,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             print("Recording failed")
             //TODO: handle errors in a user-friendly way
             //update UI
-            recordingLabel.hidden = true
+            recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
             stopButton.hidden = true
         }
     }

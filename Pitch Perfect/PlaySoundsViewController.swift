@@ -13,9 +13,7 @@ import AVFoundation
  ViewController for the Play screen. Has actions for playing back the recorded audio with various effects applied.
  */
 class PlaySoundsViewController: UIViewController {
-    
-    @IBOutlet weak var stopButton: UIButton!
-    
+        
     var receivedAudio:RecordedAudio!
     
     var audioFile:AVAudioFile!
@@ -36,10 +34,6 @@ class PlaySoundsViewController: UIViewController {
         //try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
         
         audioEngine = AVAudioEngine()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        stopButton.hidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +64,6 @@ class PlaySoundsViewController: UIViewController {
      - parameter pitch: Pitch to play back the audio at
      */
     func play(rate rate: Float?=nil, pitch: Float?=nil) {
-        stopButton.hidden = false
         
         //clean up audio engine after any previous playback
         audioEngine.stop()
@@ -95,10 +88,7 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.connect(pitchRateNode, to: audioEngine.outputNode, format: audioFile.processingFormat)
         
         //schedule file for playback in player node
-        playerNode.scheduleFile(audioFile, atTime: nil, completionHandler: {
-            //TODO: completionHandler doesn't get called exactly at the end of playback - figure out why
-            self.stopButton.hidden = true
-        })
+        playerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         
         try! audioEngine.start()
         
@@ -108,7 +98,6 @@ class PlaySoundsViewController: UIViewController {
     @IBAction func stopPlayback(sender: UIButton) {
         audioEngine.stop()
         audioEngine.reset()
-        stopButton.hidden = true
     }
 
 }

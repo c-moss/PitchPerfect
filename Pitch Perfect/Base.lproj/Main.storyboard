@@ -29,7 +29,7 @@
                                     <action selector="startRecordAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="5XG-6t-ihC"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmO-pb-qT3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmO-pb-qT3">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
                                 <color key="textColor" red="0.14509803921568626" green="0.28235294117647058" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
@@ -125,9 +125,6 @@
                                 <state key="normal" image="fast">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="230" y="114" width="100" height="100"/>
-                                </variation>
                                 <connections>
                                     <action selector="playFast:" destination="vBt-eh-rF3" eventType="touchUpInside" id="JhL-Hw-PF7"/>
                                 </connections>
@@ -144,9 +141,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8i5-qH-dSQ">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="chipmunk"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="70" y="264" width="100" height="100"/>
-                                </variation>
                                 <connections>
                                     <action selector="playChipmunkAudio:" destination="vBt-eh-rF3" eventType="touchUpInside" id="7yI-SL-32m"/>
                                 </connections>
@@ -154,9 +148,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nYm-kt-y2o">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="darth"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="230" y="264" width="100" height="100"/>
-                                </variation>
                                 <connections>
                                     <action selector="playDarthAudio:" destination="vBt-eh-rF3" eventType="touchUpInside" id="qn1-5d-RKM"/>
                                 </connections>
@@ -166,9 +157,6 @@
                                 <state key="normal" image="slow">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="6" y="114" width="100" height="100"/>
-                                </variation>
                                 <connections>
                                     <action selector="playSlow:" destination="vBt-eh-rF3" eventType="touchUpInside" id="d4S-wK-y9h"/>
                                 </connections>
@@ -224,6 +212,12 @@
                                 <exclude reference="JGT-iT-VH7"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="idX-kI-o57"/>
+                                <exclude reference="4vt-DS-89D"/>
+                                <exclude reference="5Js-jR-nU7"/>
+                                <exclude reference="H0D-Ry-N9k"/>
+                                <exclude reference="RFc-D5-Aqu"/>
+                                <exclude reference="bep-3h-geo"/>
                                 <exclude reference="4XA-Km-l0L"/>
                                 <exclude reference="5Ub-qw-gLh"/>
                                 <exclude reference="Jkc-hv-vOj"/>
@@ -231,19 +225,13 @@
                                 <exclude reference="dYT-vX-Hqw"/>
                                 <exclude reference="keK-E2-x9A"/>
                                 <exclude reference="qbU-5I-gk7"/>
-                                <exclude reference="UNC-hP-MU3"/>
-                                <exclude reference="gRq-wt-GFu"/>
-                                <exclude reference="qDN-5P-qhF"/>
-                                <exclude reference="4vt-DS-89D"/>
-                                <exclude reference="5Js-jR-nU7"/>
-                                <exclude reference="H0D-Ry-N9k"/>
-                                <exclude reference="RFc-D5-Aqu"/>
-                                <exclude reference="bep-3h-geo"/>
+                                <exclude reference="Y1L-d0-Hqo"/>
                                 <exclude reference="Ift-lx-O3w"/>
                                 <exclude reference="LbH-KZ-ELc"/>
                                 <exclude reference="kgl-7G-eq7"/>
-                                <exclude reference="Y1L-d0-Hqo"/>
-                                <exclude reference="idX-kI-o57"/>
+                                <exclude reference="UNC-hP-MU3"/>
+                                <exclude reference="gRq-wt-GFu"/>
+                                <exclude reference="qDN-5P-qhF"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -255,6 +243,12 @@
                                 <include reference="JGT-iT-VH7"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="idX-kI-o57"/>
+                                <exclude reference="4vt-DS-89D"/>
+                                <exclude reference="5Js-jR-nU7"/>
+                                <exclude reference="H0D-Ry-N9k"/>
+                                <include reference="RFc-D5-Aqu"/>
+                                <include reference="bep-3h-geo"/>
                                 <include reference="4XA-Km-l0L"/>
                                 <include reference="5Ub-qw-gLh"/>
                                 <exclude reference="Jkc-hv-vOj"/>
@@ -262,26 +256,17 @@
                                 <exclude reference="dYT-vX-Hqw"/>
                                 <exclude reference="keK-E2-x9A"/>
                                 <exclude reference="qbU-5I-gk7"/>
-                                <exclude reference="UNC-hP-MU3"/>
-                                <include reference="gRq-wt-GFu"/>
-                                <include reference="qDN-5P-qhF"/>
-                                <exclude reference="4vt-DS-89D"/>
-                                <exclude reference="5Js-jR-nU7"/>
-                                <exclude reference="H0D-Ry-N9k"/>
-                                <include reference="RFc-D5-Aqu"/>
-                                <include reference="bep-3h-geo"/>
+                                <include reference="Y1L-d0-Hqo"/>
                                 <include reference="Ift-lx-O3w"/>
                                 <include reference="LbH-KZ-ELc"/>
                                 <exclude reference="kgl-7G-eq7"/>
-                                <include reference="Y1L-d0-Hqo"/>
-                                <include reference="idX-kI-o57"/>
+                                <exclude reference="UNC-hP-MU3"/>
+                                <include reference="gRq-wt-GFu"/>
+                                <include reference="qDN-5P-qhF"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Play" id="DmE-of-VBs"/>
-                    <connections>
-                        <outlet property="stopButton" destination="fsh-na-6Jg" id="9oV-dB-ncQ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9f2-QF-Svh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

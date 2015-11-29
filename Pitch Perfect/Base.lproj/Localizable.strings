@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Pitch Perfect
+
+  Created by Campbell Moss on 29/11/15.
+  Copyright © 2015 Campbell Moss. All rights reserved.
+*/
+"RecordingLabel_default" = "Tap to record";
+"RecordingLabel_recording" = "Recording in progress";
