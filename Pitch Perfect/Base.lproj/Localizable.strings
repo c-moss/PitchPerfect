@@ -7,5 +7,6 @@
 */
 "RecordingLabel_default" = "Tap to record";
 "RecordingLabel_recording" = "Recording in progress";
+"RecordingLabel_paused" = "Recording paused: tap to continue";
 "ErrorTitle" = "Error";
 "RecordingErrorMessage" = "A problem occurred during recording. Please try again";

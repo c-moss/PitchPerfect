@@ -18,6 +18,7 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var pauseButton: UIButton!
     
     var audioRecorder:AVAudioRecorder!
     
@@ -29,6 +30,8 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
         //set up the UI
         recordButton.enabled = true
         stopButton.hidden = true
+        pauseButton.hidden = true
+        pauseButton.enabled = true
         recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
     }
 
@@ -41,28 +44,48 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
      - parameter sender:UIButton that triggered the action
     */
     @IBAction func startRecordAudio(sender: UIButton) {
-
-        //update the UI
-        recordingLabel.text = NSLocalizedString("RecordingLabel_recording", comment: "")
-        recordButton.enabled = false
-        stopButton.hidden = false
-        
-        //set up the location and file for the recording
-        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let recordingName = "recording.wav"
-        let pathArray = [dirPath, recordingName]
-        let filePath = NSURL.fileURLWithPathComponents(pathArray)
-        
-        //set up the audio session
-        let session = AVAudioSession.sharedInstance()
-        try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
-        
-        //set up the audio recorder and start recording
-        try! audioRecorder = AVAudioRecorder(URL: filePath!, settings: [:])
-        audioRecorder.delegate = self
-        audioRecorder.meteringEnabled = true
-        audioRecorder.prepareToRecord()
-        audioRecorder.record()
+        if (audioRecorder != nil) {  //recording paused - resume
+            //update the UI
+            pauseButton.enabled = true
+            recordingLabel.text = NSLocalizedString("RecordingLabel_recording", comment: "")
+            audioRecorder.record()
+        } else {
+            //update the UI
+            recordingLabel.text = NSLocalizedString("RecordingLabel_recording", comment: "")
+            recordButton.enabled = false
+            stopButton.hidden = false
+            pauseButton.hidden = false
+            
+            //set up the location and file for the recording
+            let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+            let recordingName = "recording.wav"
+            let pathArray = [dirPath, recordingName]
+            let filePath = NSURL.fileURLWithPathComponents(pathArray)
+            
+            //set up the audio session
+            let session = AVAudioSession.sharedInstance()
+            try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            
+            //set up the audio recorder and start recording
+            try! audioRecorder = AVAudioRecorder(URL: filePath!, settings: [:])
+            audioRecorder.delegate = self
+            audioRecorder.meteringEnabled = true
+            audioRecorder.prepareToRecord()
+            audioRecorder.record()
+        }
+    }
+    
+    @IBAction func pauseRecordAudio(sender: UIButton) {
+        guard audioRecorder != nil else {
+            return
+        }
+        if audioRecorder.recording {
+            //update the UI
+            recordingLabel.text = NSLocalizedString("RecordingLabel_paused", comment: "")
+            recordButton.enabled = true
+            audioRecorder.pause()
+            pauseButton.enabled = false
+        }
     }
     
     /**
@@ -71,6 +94,7 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
      */
     @IBAction func stopRecordAudio(sender: UIButton) {
         audioRecorder.stop()
+        audioRecorder = nil
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
     }
@@ -88,6 +112,8 @@ class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
                 //update UI
                 self.recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
                 self.stopButton.hidden = true
+                self.pauseButton.hidden = true
+                self.pauseButton.enabled = true
             })
         }
     }

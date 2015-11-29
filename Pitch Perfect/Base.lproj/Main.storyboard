@@ -35,6 +35,16 @@
                                 <color key="textColor" red="0.14509803921568626" green="0.28235294117647058" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g9h-tP-gmC">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="pause"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="175" y="436" width="50" height="50"/>
+                                </variation>
+                                <connections>
+                                    <action selector="pauseRecordAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="D5m-nu-YeI"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OC2-9f-cst">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="stop">
@@ -52,7 +62,7 @@
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="rFz-Ry-Qcj" secondAttribute="centerX" id="KXn-Cz-p1r"/>
                             <constraint firstAttribute="centerX" secondItem="OC2-9f-cst" secondAttribute="centerX" constant="-2" id="Uqa-tK-2Hg">
-                                <variation key="widthClass=compact" constant="0.0"/>
+                                <variation key="widthClass=compact" constant="-40"/>
                             </constraint>
                             <constraint firstItem="rFz-Ry-Qcj" firstAttribute="centerX" secondItem="MmO-pb-qT3" secondAttribute="centerX" constant="2.5" id="YbK-Gc-b4f">
                                 <variation key="widthClass=compact" constant="0.0"/>
@@ -61,43 +71,57 @@
                             <constraint firstAttribute="bottomMargin" secondItem="OC2-9f-cst" secondAttribute="bottom" constant="20" id="jrD-f7-59u">
                                 <variation key="widthClass=compact" constant="20"/>
                             </constraint>
+                            <constraint firstItem="g9h-tP-gmC" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="kzC-zj-e3F"/>
+                            <constraint firstItem="OC2-9f-cst" firstAttribute="top" secondItem="g9h-tP-gmC" secondAttribute="bottom" constant="20" id="ogS-VD-DqC"/>
                             <constraint firstAttribute="centerY" secondItem="rFz-Ry-Qcj" secondAttribute="centerY" id="stb-XG-xZQ"/>
+                            <constraint firstItem="OC2-9f-cst" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" constant="-40" id="uYW-gM-pcT">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="rFz-Ry-Qcj"/>
                                 <exclude reference="MmO-pb-qT3"/>
+                                <exclude reference="g9h-tP-gmC"/>
                                 <exclude reference="OC2-9f-cst"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="GEp-oa-brL"/>
-                                <exclude reference="Uqa-tK-2Hg"/>
-                                <exclude reference="hH3-xq-esy"/>
-                                <exclude reference="jrD-f7-59u"/>
                                 <exclude reference="KXn-Cz-p1r"/>
                                 <exclude reference="YbK-Gc-b4f"/>
                                 <exclude reference="stb-XG-xZQ"/>
+                                <exclude reference="GEp-oa-brL"/>
+                                <exclude reference="kzC-zj-e3F"/>
+                                <exclude reference="Uqa-tK-2Hg"/>
+                                <exclude reference="hH3-xq-esy"/>
+                                <exclude reference="jrD-f7-59u"/>
+                                <exclude reference="ogS-VD-DqC"/>
+                                <exclude reference="uYW-gM-pcT"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="rFz-Ry-Qcj"/>
                                 <include reference="MmO-pb-qT3"/>
+                                <include reference="g9h-tP-gmC"/>
                                 <include reference="OC2-9f-cst"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="GEp-oa-brL"/>
-                                <include reference="Uqa-tK-2Hg"/>
-                                <exclude reference="hH3-xq-esy"/>
-                                <include reference="jrD-f7-59u"/>
                                 <include reference="KXn-Cz-p1r"/>
                                 <include reference="YbK-Gc-b4f"/>
                                 <include reference="stb-XG-xZQ"/>
+                                <include reference="GEp-oa-brL"/>
+                                <include reference="kzC-zj-e3F"/>
+                                <exclude reference="Uqa-tK-2Hg"/>
+                                <exclude reference="hH3-xq-esy"/>
+                                <include reference="jrD-f7-59u"/>
+                                <include reference="ogS-VD-DqC"/>
+                                <include reference="uYW-gM-pcT"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="0AG-e5-Rkj"/>
                     <connections>
+                        <outlet property="pauseButton" destination="g9h-tP-gmC" id="oMa-3y-lIC"/>
                         <outlet property="recordButton" destination="rFz-Ry-Qcj" id="zzx-AW-jzN"/>
                         <outlet property="recordingLabel" destination="MmO-pb-qT3" id="ebU-05-8wR"/>
                         <outlet property="stopButton" destination="OC2-9f-cst" id="OC9-Le-Czl"/>
@@ -296,6 +320,7 @@
         <image name="darth" width="100" height="100"/>
         <image name="fast" width="100" height="100"/>
         <image name="microphone" width="100" height="100"/>
+        <image name="pause" width="50" height="50"/>
         <image name="slow" width="100" height="100"/>
         <image name="stop" width="50" height="50"/>
     </resources>
