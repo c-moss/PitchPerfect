@@ -12,7 +12,7 @@ import AVFoundation
 /**
  ViewController for the Record screen screen. Lets the user record an audio clip, then transitions to the Play screen.
  */
-class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
+class RecordSoundsViewController: BaseViewController, AVAudioRecorderDelegate {
     
     @IBOutlet weak var recordingLabel: UILabel!
 
@@ -41,6 +41,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
      - parameter sender:UIButton that triggered the action
     */
     @IBAction func startRecordAudio(sender: UIButton) {
+
         //update the UI
         recordingLabel.text = NSLocalizedString("RecordingLabel_recording", comment: "")
         recordButton.enabled = false
@@ -83,11 +84,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             let recordedAudio:RecordedAudio = RecordedAudio(filePathUrl: recorder.url, title: recorder.url.lastPathComponent)
             performSegueWithIdentifier("stopRecording", sender: recordedAudio)
         } else {
-            print("Recording failed")
-            //TODO: handle errors in a user-friendly way
-            //update UI
-            recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
-            stopButton.hidden = true
+            showAlert(NSLocalizedString("ErrorTitle", comment: ""), message: NSLocalizedString("RecordingErrorMessage", comment: ""), handler: {
+                //update UI
+                self.recordingLabel.text = NSLocalizedString("RecordingLabel_default", comment: "")
+                self.stopButton.hidden = true
+            })
         }
     }
     

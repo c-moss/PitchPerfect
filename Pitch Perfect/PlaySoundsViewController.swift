@@ -12,7 +12,7 @@ import AVFoundation
 /**
  ViewController for the Play screen. Has actions for playing back the recorded audio with various effects applied.
  */
-class PlaySoundsViewController: UIViewController {
+class PlaySoundsViewController: BaseViewController {
         
     var receivedAudio:RecordedAudio!
     
@@ -23,15 +23,7 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //TODO: Delete this test code and the mp3 resource it uses
-        if let filePath = NSBundle.mainBundle().pathForResource("tim", ofType: "mp3") {
-            try! audioFile = AVAudioFile(forReading: NSURL(fileURLWithPath: filePath))
-        } else {
-            print("File not found")
-        }
-        
-        //try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
+        try! audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
         
         audioEngine = AVAudioEngine()
     }
